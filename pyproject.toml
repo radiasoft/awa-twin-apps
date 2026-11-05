@@ -1,0 +1,47 @@
+[build-system]
+requires = ["chronver", "setuptools>=66"]
+build-backend = "setuptools.build_meta"
+
+[project]
+authors = [
+    { name = "RadiaSoft LLC", email = "pip@radiasoft.net" },
+]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Web Environment",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Natural Language :: English",
+    "Programming Language :: Python",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+    "h5py",
+    "numpy",
+]
+description = "Small apps for looking at and working with AWA data and the AWA twin"
+dynamic = ["version"]
+name = "awa-twin-apps"
+readme = "README.md"
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+test = [
+    "pykern",
+]
+# also needs the AWA twin (lume-rftrack's examples/awa-zone-twin), which is not on PyPI
+twin = [
+    "lume-rftrack",
+]
+
+[project.scripts]
+awa-twin-viewer = "awa_twin_apps.twin_viewer.server:main"
+
+[project.urls]
+Homepage = "https://github.com/radiasoft/awa-twin-apps"
+
+[tool.setuptools.package-data]
+awa_twin_apps = ["*/static/**"]
+
+[tool.setuptools.packages.find]
+include = ["awa_twin_apps*"]

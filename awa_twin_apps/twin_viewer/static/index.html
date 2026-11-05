@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AWA Twin Viewer</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js"></script>
+</head>
+<body>
+<header>
+  <h1>AWA twin viewer</h1>
+  <p class="muted" id="source"></p>
+  <span id="status" role="status"></span>
+</header>
+<main>
+  <section class="synoptic" aria-label="Beamline synoptic">
+    <h2>Beamline <span class="muted">(zone 1, to scale; the scanned solenoid is outlined; below an element are the twin's solenoid currents and any knob you have edited)</span></h2>
+    <ul class="legend muted" aria-label="Element kinds">
+      <li><i class="swatch cavity"></i>cavity</li>
+      <li><i class="swatch solenoid"></i>solenoid</li>
+      <li><i class="swatch corrector"></i>corrector</li>
+      <li><i class="swatch quadrupole"></i>quadrupole</li>
+      <li><i class="swatch screen"></i>screen</li>
+      <li><i class="swatch scanned"></i>scanned</li>
+      <li><i class="swatch camera"></i>camera screen</li>
+    </ul>
+    <div class="synoptic-scroll"><svg id="synoptic" role="img" aria-label="AWA zone 1, in beam order"></svg></div>
+  </section>
+
+  <section class="controls" id="controls" aria-label="Dataset and step">
+    <label>Dataset
+      <select id="dataset" aria-label="Dataset"></select>
+    </label>
+    <label class="slider">Step <span id="step-label">1</span>
+      <input id="step" type="range" min="0" max="0" value="0" aria-label="Step">
+    </label>
+    <button id="reset" type="button" disabled>No edits</button>
+  </section>
+
+  <section aria-label="Twin output against the measurement">
+    <h2>Twin against the data</h2>
+    <div id="plots" class="plots">
+      <div class="plot" id="plot-m"></div>
+      <div class="plot" id="plot-t"></div>
+      <div class="plot" id="plot-px"></div>
+      <div class="plot" id="plot-py"></div>
+    </div>
+  </section>
+
+  <section aria-label="Values">
+    <h2>Values</h2>
+    <div class="tables">
+      <div>
+        <h3>Compared</h3>
+        <table id="numbers"><thead><tr><th>Quantity</th><th>Measured</th><th>Twin</th></tr></thead><tbody></tbody></table>
+      </div>
+      <div>
+        <h3>Settings <span class="muted">(edit a value the twin ran with and press Enter to rerun it; edits stay as you move through steps and datasets)</span></h3>
+        <table id="settings"><thead><tr><th>Setting</th><th>Logged</th><th>Twin ran with</th><th></th></tr></thead><tbody></tbody></table>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

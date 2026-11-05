@@ -1,0 +1,10 @@
+*.egg-info/
+*.pyc
+.venv/
+__pycache__/
+build/
+dist/
+
+# pykern test output
+tests/*_work/
+tests/*.log
