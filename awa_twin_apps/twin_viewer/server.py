@@ -1,7 +1,7 @@
 """AWA twin viewer: step through a recorded AWA scan and see the twin's prediction beside the data.
 
 Run `awa-twin-viewer [data directory] [--twin-dir DIR] [--port N]` and open
-http://127.0.0.1:8070. The data directory is the argument, or `$AWA_DATA` without one. The twin is
+http://127.0.0.1:8070. The data directory is required. The twin is
 `lume-rftrack`'s `examples/awa-zone-twin` as `awa_twin_apps.twin` runs it (zone 1 only, at its
 nominal settings but for the solenoid currents).
 
@@ -32,7 +32,6 @@ import http.server
 import json
 import math
 import mimetypes
-import os
 import pathlib
 import threading
 import urllib.parse
@@ -236,20 +235,16 @@ class Viewer:
 
 def main():
     p = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    p.add_argument(
-        "data", nargs="?", default=os.environ.get("AWA_DATA"), type=pathlib.Path
-    )
+    p.add_argument("data", type=pathlib.Path, help="the directory of the scan files")
     p.add_argument("--particles", type=int, default=PARTICLES)
     p.add_argument("--port", type=int, default=DEFAULT_PORT)
     p.add_argument("--threads", type=int, default=None, help="RF-Track threads")
     p.add_argument(
         "--twin-dir",
         type=pathlib.Path,
-        help="the AWA twin's twin/ directory (default $AWA_TWIN_DIR, or lume-rftrack's)",
+        help="the AWA twin's twin/ directory (default: that of the installed lume-rftrack's source tree)",
     )
     a = p.parse_args()
-    if a.data is None:
-        p.error("give the data directory, or set $AWA_DATA")
     try:
         awa_twin.twin_dir(a.twin_dir)
     except ValueError as e:

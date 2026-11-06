@@ -25,7 +25,6 @@ from __future__ import annotations
 
 import collections
 import dataclasses
-import os
 import pathlib
 import sys
 import threading
@@ -296,13 +295,13 @@ def settings(step_data) -> dict:
 
 
 def twin_dir(path=None) -> pathlib.Path:
-    """The twin's `twin/` directory: `path`, else `$AWA_TWIN_DIR`, else that of the lume-rftrack
-    source tree `lume_rftrack` is installed from.
+    """The twin's `twin/` directory: `path`, else that of the lume-rftrack source tree
+    `lume_rftrack` is installed from.
 
     Raises:
         ValueError: none is found, or it has no `zone_model.py`
     """
-    p = path or os.environ.get("AWA_TWIN_DIR")
+    p = path
     if not p:
         import lume_rftrack
 
@@ -311,7 +310,7 @@ def twin_dir(path=None) -> pathlib.Path:
     if not (p / "zone_model.py").is_file():
         raise ValueError(
             f"no zone_model.py in the twin directory {p}: give the twin's "
-            "twin/ directory or set $AWA_TWIN_DIR"
+            "twin/ directory"
         )
     return p
 
